@@ -1,0 +1,19 @@
+<div class="game">
+  <div class="game-board">
+    <app-board [squares]="current.squares" (onSquareClicked)="onSquareClick($event)"></app-board>
+  </div>
+  <div class="game-info">
+    <div>
+      <span *ngIf="winner; else nextPlayer"> Player {{ game.calculateWinner(current.squares) }} has won! </span>
+      <ng-template #nextPlayer> Next player: {{ game.state.xIsNext ? 'X' : 'O' }} </ng-template>
+    </div>
+    <ol>
+      <li *ngFor="let move of history; index as i">
+        <button *ngIf="move" (click)="jumpTo(i)" [attr.data-index]="i">
+          <span *ngIf="i; else noHistory">Goto Move #{{ i }}</span>
+          <ng-template #noHistory> Goto Game start </ng-template>
+        </button>
+      </li>
+    </ol>
+  </div>
+</div>
